@@ -4,6 +4,8 @@ import androidx.compose.animation.core.*
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Face
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -12,7 +14,9 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.feraxhp.dtheme.DynamicTheme
 import com.feraxhp.dtheme.LocalThemeIsDark
@@ -30,98 +34,68 @@ internal fun App() = DynamicTheme {
     val dts = LocalThemeSettings.currentOrThrow
 
     val isDynamic = dts.useDynamicColor
-    val style = dts.style
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .windowInsetsPadding(WindowInsets.safeDrawing)
-            .padding(16.dp)
-            .background(color = MaterialTheme.colorScheme.background)
-        ,
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        Text(
-            text = stringResource(Res.string.cyclone),
-            fontFamily = FontFamily(Font(Res.font.IndieFlower_Regular)),
-            style = MaterialTheme.typography.displayLarge
-        )
-
-        var isRotating by remember { mutableStateOf(false) }
-
-        val rotate = remember { Animatable(0f) }
-        val target = 360f
-        if (isRotating) {
-            LaunchedEffect(Unit) {
-                while (isActive) {
-                    val remaining = (target - rotate.value) / target
-                    rotate.animateTo(target, animationSpec = tween((1_000 * remaining).toInt(), easing = LinearEasing))
-                    rotate.snapTo(0f)
+    Scaffold { paddingValues ->
+        Box(
+            modifier = Modifier.fillMaxSize()
+                    .padding(top = paddingValues.calculateTopPadding())
+            ,
+            contentAlignment = Alignment.Center,
+        ) {
+            Row(
+                modifier = Modifier
+                    .padding(horizontal = 8.dp, vertical = 4.dp)
+                    .wrapContentWidth(align = Alignment.CenterHorizontally)
+                    .align(Alignment.TopEnd),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.End
+            ) {
+                var isDark by LocalThemeIsDark.current
+                val uriHandler = LocalUriHandler.current
+                TextButton(
+                    modifier = Modifier.wrapContentWidth(),
+                    onClick = { uriHandler.openUri("https://github.com/feraxhp") },
+                ) {
+                    Icon(
+                        modifier = Modifier.size(28.dp)
+                            .padding(end = 8.dp),
+                        imageVector = Github,
+                        contentDescription = null
+                    )
+                    Text(stringResource(Res.string.open_github))
                 }
-            }
-        }
-
-        Image(
-            modifier = Modifier
-                .size(250.dp)
-                .padding(16.dp)
-                .run { rotate(rotate.value) },
-            imageVector = vectorResource(Res.drawable.ic_cyclone),
-            colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSurface),
-            contentDescription = null
-        )
-
-        ElevatedButton(
-            modifier = Modifier
-                .padding(horizontal = 8.dp, vertical = 4.dp)
-                .widthIn(min = 200.dp),
-            onClick = { isRotating = !isRotating },
-            content = {
-                Icon(vectorResource(Res.drawable.ic_rotate_right), contentDescription = null)
-                Spacer(Modifier.size(ButtonDefaults.IconSpacing))
-                Text(
-                    stringResource(if (isRotating) Res.string.stop else Res.string.run)
+                IconButton(
+                    modifier = Modifier,
+                    onClick = { isDark = !isDark },
+                    content = {
+                        Icon(
+                            vectorResource(
+                                if (isDark) Res.drawable.ic_light_mode
+                                else Res.drawable.ic_dark_mode
+                            ),
+                            contentDescription = null
+                        )
+                    }
                 )
             }
-        )
 
-        var isDark by LocalThemeIsDark.current
-        val icon = remember(isDark) {
-            if (isDark) Res.drawable.ic_light_mode
-            else Res.drawable.ic_dark_mode
-        }
+            Column(
+                modifier = Modifier.padding(16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
 
-        ElevatedButton(
-            modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp).widthIn(min = 200.dp),
-            onClick = { isDark = !isDark },
-            content = {
-                Icon(vectorResource(icon), contentDescription = null)
-                Spacer(Modifier.size(ButtonDefaults.IconSpacing))
-                Text(stringResource(Res.string.theme))
+            ) {
+                Text(
+                    text = "Hello!",
+                    style = MaterialTheme.typography.titleLarge,
+
+                    fontSize = 56.sp,
+                    textAlign = TextAlign.Center
+                )
+
+                Text(
+                    text = "This web is under construction.\n Please check it back later.",
+                    textAlign = TextAlign.Center
+                )
             }
-        )
-
-        val icon2 = remember(isDynamic.value) {
-            if (isDynamic.value) Res.drawable.ic_light_mode
-            else Res.drawable.ic_dark_mode
-        }
-
-        ElevatedButton(
-            modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp).widthIn(min = 200.dp),
-            onClick = { dts.setUseDynamicColor(!isDynamic.value) },
-            content = {
-                Icon(vectorResource(icon), contentDescription = null)
-                Spacer(Modifier.size(ButtonDefaults.IconSpacing))
-                Text(stringResource(Res.string.theme))
-            }
-        )
-
-        val uriHandler = LocalUriHandler.current
-        TextButton(
-            modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp).widthIn(min = 200.dp),
-            onClick = { uriHandler.openUri("https://github.com/terrakok") },
-        ) {
-            Text(stringResource(Res.string.open_github))
         }
     }
 }
