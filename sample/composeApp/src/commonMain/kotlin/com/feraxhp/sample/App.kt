@@ -2,6 +2,7 @@ package com.feraxhp.sample
 
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -12,7 +13,7 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
-import com.feraxhp.dtheme.theme.dtheme
+import com.feraxhp.dtheme.theme.DynamicTheme
 import com.feraxhp.dtheme.theme.LocalThemeIsDark
 import kotlinx.coroutines.isActive
 import dtheme.sample.composeapp.generated.resources.Res
@@ -22,13 +23,15 @@ import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.resources.vectorResource
 
 @Composable
-internal fun App() = dtheme {
+internal fun App() = DynamicTheme {
     Column(
         modifier = Modifier
             .fillMaxSize()
             .windowInsetsPadding(WindowInsets.safeDrawing)
-            .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+            .padding(16.dp)
+            .background(color = MaterialTheme.colorScheme.background)
+        ,
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
             text = stringResource(Res.string.cyclone),

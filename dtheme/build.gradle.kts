@@ -1,7 +1,7 @@
 import org.jetbrains.compose.ExperimentalComposeLibrary
-import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import com.android.build.api.dsl.ManagedVirtualDevice
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSetTree
 
@@ -36,10 +36,10 @@ kotlin {
         binaries.executable()
     }
 
-//    wasmJs {
-//        browser()
-//        binaries.executable()
-//    }
+    wasmJs {
+        browser()
+        binaries.executable()
+    }
 
     listOf(
         iosX64(),
@@ -62,6 +62,7 @@ kotlin {
             implementation(libs.napier)
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.multiplatformSettings)
+            implementation(libs.materialKolor)
         }
 
         commonTest.dependencies {
@@ -75,22 +76,18 @@ kotlin {
             implementation(compose.uiTooling)
             implementation(libs.androidx.activityCompose)
             implementation(libs.kotlinx.coroutines.android)
-            implementation(libs.sqlDelight.driver.android)
         }
 
         jvmMain.dependencies {
             implementation(compose.desktop.currentOs)
             implementation(libs.kotlinx.coroutines.swing)
-            implementation(libs.sqlDelight.driver.sqlite)
         }
 
         jsMain.dependencies {
             implementation(compose.html.core)
-            implementation(libs.sqlDelight.driver.js)
         }
 
         iosMain.dependencies {
-            implementation(libs.sqlDelight.driver.native)
         }
 
     }
