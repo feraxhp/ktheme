@@ -1,32 +1,47 @@
-package com.feraxhp.dtheme.theme
+package com.feraxhp.dtheme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.graphics.Color
+import com.feraxhp.dtheme.DynamicThemeSettings
 import com.materialkolor.DynamicMaterialTheme
-import com.materialkolor.DynamicMaterialThemeState
 import com.materialkolor.rememberDynamicMaterialThemeState
 
 val LocalThemeIsDark = compositionLocalOf { mutableStateOf(true) }
-internal val LocalThemeIsDynamic = compositionLocalOf { mutableStateOf(true) }
+val LocalThemeSettings = compositionLocalOf<DynamicThemeSettings?> { null }
 
 @Composable
 fun DynamicTheme( content: @Composable () -> Unit ) {
 
+    val dts: DynamicThemeSettings = remember { DynamicThemeSettings() }
+
+    val seedColor by dts.seedColor.collectAsState()
+    val theme by dts.theme.collectAsState()
+    val useDynamicColor by dts.useDynamicColor.collectAsState()
+    val useAmoled by dts.useAmoled.collectAsState()
+    val style by dts.style.collectAsState()
+    val contrastLevel by dts.contrastLevel.collectAsState()
+    val extendedFidelity by dts.extendedFidelity.collectAsState()
+    val hasAnimation by dts.hasAnimation.collectAsState()
+
     val systemIsDark = isSystemInDarkTheme()
-    val isDarkState = remember { mutableStateOf(systemIsDark) }
-    val isDynamic = remember { mutableStateOf(true) }
-    val androidScheme = getColorScheme(isDarkState.value, isDynamic.value)
+    val isDarkState = remember { mutableStateOf(theme ?: systemIsDark) }
+
+    val androidScheme = if (useDynamicColor) { getColorScheme(isDarkState.value) } else null
 
     val dynamicThemeState = rememberDynamicMaterialThemeState(
-        seedColor = seed,
+        seedColor = seedColor,
         isDark = isDarkState.value,
+        isAmoled = useAmoled,
+        style = style.paletteStyle,
+        contrastLevel = contrastLevel,
+        extendedFidelity = extendedFidelity,
         modifyColorScheme = { scheme ->
             return@rememberDynamicMaterialThemeState androidScheme ?: scheme
         }
@@ -36,11 +51,11 @@ fun DynamicTheme( content: @Composable () -> Unit ) {
 
     CompositionLocalProvider(
         LocalThemeIsDark provides isDarkState,
-        LocalThemeIsDynamic provides isDynamic
+        LocalThemeSettings provides dts
     ) {
         DynamicMaterialTheme(
             state = dynamicThemeState,
-            animate = true,
+            animate = hasAnimation,
             content = { Surface { content() } }
         )
     }
@@ -50,4 +65,4 @@ fun DynamicTheme( content: @Composable () -> Unit ) {
 internal expect fun SystemAppearance(isDark: Boolean)
 
 @Composable
-internal expect fun getColorScheme(isDark: Boolean, dynamicColor: Boolean = true): ColorScheme?
+internal expect fun getColorScheme(isDark: Boolean): ColorScheme?

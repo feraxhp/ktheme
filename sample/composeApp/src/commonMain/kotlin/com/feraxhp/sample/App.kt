@@ -13,8 +13,10 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
-import com.feraxhp.dtheme.theme.DynamicTheme
-import com.feraxhp.dtheme.theme.LocalThemeIsDark
+import cafe.adriel.voyager.navigator.currentOrThrow
+import com.feraxhp.dtheme.DynamicTheme
+import com.feraxhp.dtheme.LocalThemeIsDark
+import com.feraxhp.dtheme.LocalThemeSettings
 import kotlinx.coroutines.isActive
 import dtheme.sample.composeapp.generated.resources.Res
 import dtheme.sample.composeapp.generated.resources.*
@@ -24,6 +26,12 @@ import org.jetbrains.compose.resources.vectorResource
 
 @Composable
 internal fun App() = DynamicTheme {
+
+    val dts = LocalThemeSettings.currentOrThrow
+
+    val isDynamic = dts.useDynamicColor
+    val style = dts.style
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -86,6 +94,21 @@ internal fun App() = DynamicTheme {
         ElevatedButton(
             modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp).widthIn(min = 200.dp),
             onClick = { isDark = !isDark },
+            content = {
+                Icon(vectorResource(icon), contentDescription = null)
+                Spacer(Modifier.size(ButtonDefaults.IconSpacing))
+                Text(stringResource(Res.string.theme))
+            }
+        )
+
+        val icon2 = remember(isDynamic.value) {
+            if (isDynamic.value) Res.drawable.ic_light_mode
+            else Res.drawable.ic_dark_mode
+        }
+
+        ElevatedButton(
+            modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp).widthIn(min = 200.dp),
+            onClick = { dts.setUseDynamicColor(!isDynamic.value) },
             content = {
                 Icon(vectorResource(icon), contentDescription = null)
                 Spacer(Modifier.size(ButtonDefaults.IconSpacing))

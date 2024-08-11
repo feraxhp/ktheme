@@ -1,4 +1,4 @@
-package com.feraxhp.dtheme.theme
+package com.feraxhp.dtheme
 
 import android.app.Activity
 import android.graphics.Color
@@ -29,9 +29,9 @@ internal actual fun SystemAppearance(isDark: Boolean) {
 }
 
 @Composable
-internal actual fun getColorScheme(isDark: Boolean, dynamicColor: Boolean): ColorScheme?{
+internal actual fun getColorScheme(isDark: Boolean): ColorScheme?{
     val colorScheme = when {
-        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
+        Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
             val context = LocalContext.current
             if (isDark) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
         }
