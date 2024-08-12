@@ -65,7 +65,7 @@ kotlin {
             implementation(libs.napier)
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.multiplatformSettings)
-            implementation(project(":dtheme"))
+            implementation(project(":ktheme"))
         }
 
         commonTest.dependencies {

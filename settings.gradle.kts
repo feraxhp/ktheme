@@ -1,4 +1,4 @@
-rootProject.name = "dtheme"
+rootProject.name = "ktheme"
 
 pluginManagement {
     repositories {
@@ -32,5 +32,5 @@ dependencyResolutionManagement {
 }
 
 include(":sample:composeApp")
-include(":dtheme")
+include(":ktheme")
 

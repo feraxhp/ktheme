@@ -1,30 +1,20 @@
 package com.feraxhp.sample
 
-import androidx.compose.animation.core.*
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Face
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalUriHandler
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.navigator.currentOrThrow
-import com.feraxhp.dtheme.DynamicTheme
-import com.feraxhp.dtheme.LocalThemeIsDark
-import com.feraxhp.dtheme.LocalThemeSettings
-import kotlinx.coroutines.isActive
-import dtheme.sample.composeapp.generated.resources.Res
-import dtheme.sample.composeapp.generated.resources.*
-import org.jetbrains.compose.resources.Font
+import com.feraxhp.ktheme.DynamicTheme
+import com.feraxhp.ktheme.LocalThemeIsDark
+import com.feraxhp.ktheme.LocalThemeSettings
+import ktheme.sample.composeapp.generated.resources.Res
+import ktheme.sample.composeapp.generated.resources.*
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.resources.vectorResource
 
