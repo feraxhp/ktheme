@@ -95,7 +95,7 @@ kotlin {
 }
 
 android {
-    namespace = "com.feraxhp.dtheme"
+    namespace = "com.feraxhp.ktheme"
     compileSdk = 34
 
     defaultConfig {
