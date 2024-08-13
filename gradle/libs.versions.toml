@@ -15,6 +15,8 @@ composeIcons = "1.1.0"
 kotlinx-serialization = "1.7.1"
 kotlinx-datetime = "0.6.0"
 multiplatformSettings = "1.1.1"
+publish = "0.29.0"
+dokka = "1.9.20"
 
 [libraries]
 
@@ -46,3 +48,5 @@ android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
 buildConfig = { id = "com.github.gmazzo.buildconfig", version.ref = "buildConfig" }
 kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+gradle-publish = { id = "com.vanniktech.maven.publish", version.ref = "publish" }
+dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }

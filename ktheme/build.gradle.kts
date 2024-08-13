@@ -1,7 +1,8 @@
 import org.jetbrains.compose.ExperimentalComposeLibrary
 import com.android.build.api.dsl.ManagedVirtualDevice
-import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+import com.vanniktech.maven.publish.SonatypeHost
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
+import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSetTree
 
@@ -11,6 +12,8 @@ plugins {
     alias(libs.plugins.compose)
     alias(libs.plugins.android.library)
     alias(libs.plugins.buildConfig)
+    alias(libs.plugins.gradle.publish)
+    alias(libs.plugins.dokka)
 }
 
 kotlin {
@@ -33,12 +36,14 @@ kotlin {
 
     js {
         browser()
+        // browser { testTask { useKarma { useFirefox() } } } // Un comment if chrome is not installed
         binaries.executable()
     }
 
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
         browser()
+        // browser { testTask { useKarma { useFirefox() } } } // Un comment if chrome is not installed
         binaries.executable()
     }
 
@@ -133,4 +138,48 @@ dependencies {
 buildConfig {
     // BuildConfig configuration here.
     // https://github.com/gmazzo/gradle-buildconfig-plugin#usage-in-kts
+}
+
+mavenPublishing {
+    // Define coordinates for the published artifact
+    coordinates(
+        groupId = "com.feraxhp.ktheme",
+        artifactId = "ktheme-compose",
+        version = "0.0.1"
+    )
+
+    // Configure POM metadata for the published artifact
+    pom {
+        name.set("ktheme")
+        description.set("A ready to use compose multiplatform library with all the essentials to manage the dynamic theme for all platforms.")
+        inceptionYear.set("2024")
+        url.set("https://github.com/feraxhp/ktheme")
+
+        licenses {
+            license {
+                name.set("MIT")
+                url.set("https://opensource.org/licenses/MIT")
+            }
+        }
+
+        // Specify developer information
+        developers {
+            developer {
+                id.set("feraxhp")
+                name.set("feraxhp")
+                email.set("feraxhp+mvn@gmail.com")
+            }
+        }
+
+        // Specify SCM information
+        scm {
+            url.set("https://github.com/feraxhp/ktheme")
+        }
+    }
+
+    // Configure publishing to Maven Central
+    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
+
+    // Enable GPG signing for all publications
+    signAllPublications()
 }
