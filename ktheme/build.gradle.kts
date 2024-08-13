@@ -145,7 +145,7 @@ mavenPublishing {
     coordinates(
         groupId = "com.feraxhp.ktheme",
         artifactId = "ktheme-compose",
-        version = "0.0.1"
+        version = "0.0.2"
     )
 
     // Configure POM metadata for the published artifact
