@@ -70,6 +70,7 @@ jobs:
 
   sample:
     name: Publish Sample App
+    needs: ktheme
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
