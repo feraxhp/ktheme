@@ -6,10 +6,15 @@ import com.feraxhp.ktheme.settings.Tsettings
 import com.materialkolor.Contrast
 import com.materialkolor.PaletteStyle
 import com.russhwolf.settings.Settings
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 
 
-class DynamicThemeSettings {
+class DynamicThemeSettings(
+    private val scope: CoroutineScope
+) {
 
     private val _settings: Tsettings = Tsettings()
     private val settings: Settings = Settings()
@@ -37,62 +42,79 @@ class DynamicThemeSettings {
 
     fun setSeedColor(value: Color){
         this._settings.seedColor.value = value
-        this.settings.putInt(
-            value = value.value.toInt(),
-            key = ThemeSettings.seedColor.key
-        )
+        this.scope.launch {
+            settings.putInt(
+                value = value.value.toInt(),
+                key = ThemeSettings.seedColor.key
+            )
+        }
     }
     fun setTheme(value: Boolean?){
         this._settings.theme.value = value
-        if(value == null ) { this.settings.remove(ThemeSettings.theme.key)}
-        else {
-            this.settings.putBoolean(
-                value = value,
-                key = ThemeSettings.theme.key
-            )
+        this.scope.launch {
+            if (value == null) {
+                settings.remove(ThemeSettings.theme.key)
+            } else {
+                settings.putBoolean(
+                    value = value,
+                    key = ThemeSettings.theme.key
+                )
+            }
         }
     }
     fun setUseDynamicColor(value: Boolean){
         this._settings.useDynamicColor.value = value
-        this.settings.putBoolean(
-            value = value,
-            key = ThemeSettings.useDynamicColor.key
-        )
+        this.scope.launch {
+            settings.putBoolean(
+                value = value,
+                key = ThemeSettings.useDynamicColor.key
+            )
+        }
     }
     fun setUseAmoled(value: Boolean){
         this._settings.useAmoled.value = value
-        this.settings.putBoolean(
-            value = value,
-            key = ThemeSettings.useAmoled.key
-        )
+        this.scope.launch {
+            settings.putBoolean(
+                value = value,
+                key = ThemeSettings.useAmoled.key
+            )
+        }
     }
     fun setStyle(value: PaletteStyles){
         this._settings.style.value = value
-        this.settings.putString(
-            ThemeSettings.style.key,
-            value.name
-        )
+        this.scope.launch {
+            settings.putString(
+                ThemeSettings.style.key,
+                value.name
+            )
+        }
     }
     fun setContrastLevel(value: Double){
         this._settings.contrastLevel.value = value
-        this.settings.putDouble(
-            value = value,
-            key = ThemeSettings.contrastLevel.key
-        )
+        this.scope.launch {
+            settings.putDouble(
+                value = value,
+                key = ThemeSettings.contrastLevel.key
+            )
+        }
     }
     fun setExtendedFidelity(value: Boolean){
         this._settings.extendedFidelity.value = value
-        this.settings.putBoolean(
-            value = value,
-            key = ThemeSettings.extendedFidelity.key
-        )
+        this.scope.launch {
+            settings.putBoolean(
+                value = value,
+                key = ThemeSettings.extendedFidelity.key
+            )
+        }
     }
     fun setHasAnimation(value: Boolean){
         this._settings.hasAnimation.value = value
-        this.settings.putBoolean(
-            value = value,
-            key = ThemeSettings.hasAnimation.key
-        )
+        this.scope.launch {
+            settings.putBoolean(
+                value = value,
+                key = ThemeSettings.hasAnimation.key
+            )
+        }
     }
     private fun getStyle(value: String): PaletteStyles{
         return PaletteStyles.valueOf(value)

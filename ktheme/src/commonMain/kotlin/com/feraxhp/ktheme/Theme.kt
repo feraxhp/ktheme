@@ -9,6 +9,7 @@ import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import com.materialkolor.DynamicMaterialTheme
 import com.materialkolor.rememberDynamicMaterialThemeState
 
@@ -18,7 +19,8 @@ val LocalThemeSettings = compositionLocalOf<DynamicThemeSettings?> { null }
 @Composable
 fun DynamicTheme( content: @Composable () -> Unit ) {
 
-    val dts: DynamicThemeSettings = remember { DynamicThemeSettings() }
+    val scope = rememberCoroutineScope()
+    val dts: DynamicThemeSettings = remember { DynamicThemeSettings(scope) }
 
     val seedColor by dts.seedColor.collectAsState()
     val theme by dts.theme.collectAsState()
@@ -30,7 +32,7 @@ fun DynamicTheme( content: @Composable () -> Unit ) {
     val hasAnimation by dts.hasAnimation.collectAsState()
 
     val systemIsDark = isSystemInDarkTheme()
-    val isDarkState = remember { mutableStateOf(theme ?: systemIsDark) }
+    val isDarkState = remember(key1 = theme) { mutableStateOf(theme ?: systemIsDark) }
 
     val androidScheme = if (useDynamicColor) { getColorScheme(isDarkState.value) } else null
 

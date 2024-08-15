@@ -11,6 +11,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 internal actual fun SystemAppearance(isDark: Boolean) {
