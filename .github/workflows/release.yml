@@ -1,0 +1,43 @@
+# MIT Licence
+# Copyright 2024 feraxhp
+
+
+name: Publish and Build library
+run-name: 🚀 ¡ktheme release! 🚀
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "main" ]
+    paths:
+      - 'ktheme/build.gradle.kts'
+      - 'version.md'
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  ktheme:
+    name: S1
+    uses: feraxhp/kactions/.github/workflows/publish.yml@main
+    with:
+      module: ':ktheme'
+    secrets:
+      SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
+      MAVEN_CENTRAL_USERNAME: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
+      MAVEN_CENTRAL_PASSWORD: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
+      SIGNING_KEY_ID: ${{ secrets.SIGNING_KEY_ID }}
+      SIGNING_KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD }}
+
+  pages:
+    name: S2
+    needs: ktheme
+    uses: feraxhp/kactions/.github/workflows/pages.yml@main
+    with:
+      platform: 'Wasm'
+      module: ':sample:composeApp'
+
+
+# See LICENCE in the project root
+# for the full licence detail.
