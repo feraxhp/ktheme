@@ -20,7 +20,7 @@ permissions:
 jobs:
   ktheme:
     name: S1
-    uses: feraxhp/kactions/.github/workflows/publish.yml@main
+    uses: feraxhp/kactions/.github/workflows/publish.yml@v1.0.0
     with:
       module: ':ktheme'
     secrets:
@@ -33,7 +33,7 @@ jobs:
   pages:
     name: S2
     needs: ktheme
-    uses: feraxhp/kactions/.github/workflows/pages.yml@main
+    uses: feraxhp/kactions/.github/workflows/pages.yml@v1.0.0
     with:
       platform: 'Wasm'
       module: ':sample:composeApp'
