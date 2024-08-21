@@ -1,6 +1,5 @@
 package com.feraxhp.sample.screens.components
 
-import ThemeSelector
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -19,7 +18,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.navigator.currentOrThrow
-import com.feraxhp.ktheme.DynamicThemeSettings
 import com.feraxhp.ktheme.LocalThemeIsDark
 import com.feraxhp.ktheme.LocalThemeSettings
 import com.feraxhp.sample.Github
@@ -63,8 +61,9 @@ fun TopBar(modifier: Modifier = Modifier) = Row(
     IconButton(
         modifier = Modifier,
         onClick = {
-            dts.setTheme(null);
-            isDark = !isDark
+            dts.setTheme(null) {
+                isDark = !isDark
+            }
         },
         content = {
             Icon(

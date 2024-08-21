@@ -40,16 +40,16 @@ class DynamicThemeSettings(
 
     }
 
-    fun setSeedColor(value: Color){
+    fun setSeedColor(value: Color, invokeOnCompletion: () -> Unit = {}){
         this._settings.seedColor.value = value
         this.scope.launch {
             settings.putInt(
                 value = value.value.toInt(),
                 key = ThemeSettings.seedColor.key
             )
-        }
+        }.invokeOnCompletion { invokeOnCompletion() }
     }
-    fun setTheme(value: Boolean?){
+    fun setTheme(value: Boolean?, invokeOnCompletion: () -> Unit = {}){
         this._settings.theme.value = value
         this.scope.launch {
             if (value == null) {
@@ -60,61 +60,61 @@ class DynamicThemeSettings(
                     key = ThemeSettings.theme.key
                 )
             }
-        }
+        }.invokeOnCompletion { invokeOnCompletion() }
     }
-    fun setUseDynamicColor(value: Boolean){
+    fun setUseDynamicColor(value: Boolean, invokeOnCompletion: () -> Unit = {}){
         this._settings.useDynamicColor.value = value
         this.scope.launch {
             settings.putBoolean(
                 value = value,
                 key = ThemeSettings.useDynamicColor.key
             )
-        }
+        }.invokeOnCompletion { invokeOnCompletion() }
     }
-    fun setUseAmoled(value: Boolean){
+    fun setUseAmoled(value: Boolean, invokeOnCompletion: () -> Unit = {}){
         this._settings.useAmoled.value = value
         this.scope.launch {
             settings.putBoolean(
                 value = value,
                 key = ThemeSettings.useAmoled.key
             )
-        }
+        }.invokeOnCompletion { invokeOnCompletion() }
     }
-    fun setStyle(value: PaletteStyles){
+    fun setStyle(value: PaletteStyles, invokeOnCompletion: () -> Unit = {}){
         this._settings.style.value = value
         this.scope.launch {
             settings.putString(
                 ThemeSettings.style.key,
                 value.name
             )
-        }
+        }.invokeOnCompletion { invokeOnCompletion() }
     }
-    fun setContrastLevel(value: Double){
+    fun setContrastLevel(value: Double, invokeOnCompletion: () -> Unit = {}){
         this._settings.contrastLevel.value = value
         this.scope.launch {
             settings.putDouble(
                 value = value,
                 key = ThemeSettings.contrastLevel.key
             )
-        }
+        }.invokeOnCompletion { invokeOnCompletion() }
     }
-    fun setExtendedFidelity(value: Boolean){
+    fun setExtendedFidelity(value: Boolean, invokeOnCompletion: () -> Unit = {}){
         this._settings.extendedFidelity.value = value
         this.scope.launch {
             settings.putBoolean(
                 value = value,
                 key = ThemeSettings.extendedFidelity.key
             )
-        }
+        }.invokeOnCompletion { invokeOnCompletion() }
     }
-    fun setHasAnimation(value: Boolean){
+    fun setHasAnimation(value: Boolean, invokeOnCompletion: () -> Unit = {}){
         this._settings.hasAnimation.value = value
         this.scope.launch {
             settings.putBoolean(
                 value = value,
                 key = ThemeSettings.hasAnimation.key
             )
-        }
+        }.invokeOnCompletion { invokeOnCompletion() }
     }
     private fun getStyle(value: String): PaletteStyles{
         return PaletteStyles.valueOf(value)

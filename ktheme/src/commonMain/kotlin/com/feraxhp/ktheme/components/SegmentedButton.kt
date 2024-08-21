@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Done
@@ -31,6 +32,7 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.selects.select
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -81,6 +83,7 @@ fun SegmentedButton(
                             )
                         }
                         Segment(
+                            modifier = Modifier.weight(1f),
                             text = segment.text,
                             icon = segment.icon,
                             enabled = segment.enabled,
@@ -186,6 +189,7 @@ internal fun Segment(
 
     Row(
         verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center,
         modifier = Modifier
             .clickable(
                 enabled = enabled,
