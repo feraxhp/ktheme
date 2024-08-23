@@ -18,10 +18,13 @@ val LocalThemeIsDark = compositionLocalOf { mutableStateOf(true) }
 val LocalThemeSettings = compositionLocalOf<DynamicThemeSettings?> { null }
 
 @Composable
-fun DynamicTheme( content: @Composable () -> Unit ) {
+fun DynamicTheme(
+    baseColor: Int? = null,
+    content: @Composable () -> Unit
+) {
 
     val scope = rememberCoroutineScope()
-    val dts: DynamicThemeSettings = remember { DynamicThemeSettings(scope) }
+    val dts: DynamicThemeSettings = remember { DynamicThemeSettings(scope, baseColor = baseColor) }
 
     val seedColor by dts.seedColor.collectAsState()
     val theme by dts.theme.collectAsState()

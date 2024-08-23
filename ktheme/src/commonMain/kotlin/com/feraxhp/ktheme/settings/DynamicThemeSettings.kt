@@ -13,7 +13,8 @@ import kotlinx.coroutines.launch
 
 
 class DynamicThemeSettings(
-    private val scope: CoroutineScope
+    private val scope: CoroutineScope,
+    private val baseColor: Int ? = null
 ) {
 
     private val _settings: Tsettings = Tsettings()
@@ -29,7 +30,7 @@ class DynamicThemeSettings(
     val hasAnimation = _settings.hasAnimation.asStateFlow()
 
     init {
-        this._settings.seedColor.value = Color(this.settings.getInt(ThemeSettings.seedColor.key, 0X4C662B))
+        this._settings.seedColor.value = Color(this.settings.getInt(ThemeSettings.seedColor.key, baseColor ?: 0X4C662B))
         this._settings.theme.value = this.settings.getBooleanOrNull(ThemeSettings.theme.key)
         this._settings.useDynamicColor.value = this.settings.getBoolean(ThemeSettings.useDynamicColor.key, true)
         this._settings.useAmoled.value = this.settings.getBoolean(ThemeSettings.useAmoled.key, false)
