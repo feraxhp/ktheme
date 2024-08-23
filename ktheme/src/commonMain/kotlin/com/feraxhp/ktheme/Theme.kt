@@ -10,6 +10,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import com.feraxhp.ktheme.internal.toAmoled
 import com.materialkolor.DynamicMaterialTheme
 import com.materialkolor.rememberDynamicMaterialThemeState
 
@@ -44,7 +45,10 @@ fun DynamicTheme( content: @Composable () -> Unit ) {
         contrastLevel = contrastLevel,
         extendedFidelity = extendedFidelity,
         modifyColorScheme = { scheme ->
-            return@rememberDynamicMaterialThemeState androidScheme ?: scheme
+            val modifiedScheme: ColorScheme? =
+                if(useAmoled && androidScheme != null && isDark) toAmoled(androidScheme)
+                else androidScheme
+            return@rememberDynamicMaterialThemeState modifiedScheme ?: scheme
         }
     )
 
