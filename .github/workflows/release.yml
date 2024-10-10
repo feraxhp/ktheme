@@ -6,11 +6,9 @@ name: Publish and Build library
 run-name: 🚀 ¡ktheme release! 🚀
 on:
   workflow_dispatch:
-  push:
-    branches: [ "main" ]
-    paths:
-      - 'ktheme/build.gradle.kts'
-      - 'version.md'
+  release:
+    types:
+      - created
 
 permissions:
   contents: read
