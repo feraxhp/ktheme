@@ -69,6 +69,7 @@ kotlin {
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.multiplatformSettings)
             implementation(libs.materialKolor)
+            implementation(libs.colorpicker)
         }
 
         commonTest.dependencies {
