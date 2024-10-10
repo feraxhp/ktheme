@@ -27,6 +27,9 @@ fun DynamicTheme(
     val dts: DynamicThemeSettings = remember { DynamicThemeSettings(scope, baseColor = baseColor) }
 
     val seedColor by dts.seedColor.collectAsState()
+    val secondary by dts.secondary.collectAsState()
+    val tertiary by dts.tertiary.collectAsState()
+    val error by dts.error.collectAsState()
     val theme by dts.theme.collectAsState()
     val useDynamicColor by dts.useDynamicColor.collectAsState()
     val useAmoled by dts.useAmoled.collectAsState()
@@ -40,19 +43,21 @@ fun DynamicTheme(
 
     val androidScheme = if (useDynamicColor) { getColorScheme(isDarkState.value) } else null
 
+    val modifiedScheme: ColorScheme? =
+        if(useAmoled && androidScheme != null && isDarkState.value) toAmoled(androidScheme)
+        else androidScheme
+
     val dynamicThemeState = rememberDynamicMaterialThemeState(
-        seedColor = seedColor,
+        seedColor = modifiedScheme?.primary ?: seedColor,
         isDark = isDarkState.value,
+        primary = modifiedScheme?.primary,
+        secondary = modifiedScheme?.secondary ?: secondary,
+        tertiary = modifiedScheme?.tertiary ?: tertiary,
+        error = modifiedScheme?.error ?: error,
         isAmoled = useAmoled,
         style = style.paletteStyle,
         contrastLevel = contrastLevel,
-        extendedFidelity = extendedFidelity,
-        modifyColorScheme = { scheme ->
-            val modifiedScheme: ColorScheme? =
-                if(useAmoled && androidScheme != null && isDark) toAmoled(androidScheme)
-                else androidScheme
-            return@rememberDynamicMaterialThemeState modifiedScheme ?: scheme
-        }
+        extendedFidelity = extendedFidelity
     )
 
     SystemAppearance(isDarkState.value)

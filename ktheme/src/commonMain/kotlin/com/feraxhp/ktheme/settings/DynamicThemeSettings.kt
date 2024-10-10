@@ -14,13 +14,16 @@ import kotlinx.coroutines.launch
 
 class DynamicThemeSettings(
     private val scope: CoroutineScope,
-    private val baseColor: Int ? = null
+    baseColor: Int ? = null
 ) {
 
     private val _settings: Tsettings = Tsettings()
     private val settings: Settings = Settings()
 
     val seedColor = _settings.seedColor.asStateFlow()
+    val secondary = _settings.secondary.asStateFlow()
+    val tertiary = _settings.tertiary.asStateFlow()
+    val error = _settings.error.asStateFlow()
     val theme = _settings.theme.asStateFlow()
     val useDynamicColor = _settings.useDynamicColor.asStateFlow()
     val useAmoled = _settings.useAmoled.asStateFlow()
@@ -31,6 +34,9 @@ class DynamicThemeSettings(
 
     init {
         this._settings.seedColor.value = Color(this.settings.getInt(ThemeSettings.seedColor.key, baseColor ?: 0X4C662B))
+        this._settings.secondary.value = this.settings.getIntOrNull(ThemeSettings.secondary.key)?.let { Color(it) }
+        this._settings.tertiary.value = this.settings.getIntOrNull(ThemeSettings.tertiary.key)?.let { Color(it) }
+        this._settings.error.value = this.settings.getIntOrNull(ThemeSettings.error.key)?.let { Color(it) }
         this._settings.theme.value = this.settings.getBooleanOrNull(ThemeSettings.theme.key)
         this._settings.useDynamicColor.value = this.settings.getBoolean(ThemeSettings.useDynamicColor.key, true)
         this._settings.useAmoled.value = this.settings.getBoolean(ThemeSettings.useAmoled.key, false)
@@ -38,7 +44,6 @@ class DynamicThemeSettings(
         this._settings.contrastLevel.value = this.settings.getDouble(ThemeSettings.contrastLevel.key, Contrast.Default.value)
         this._settings.extendedFidelity.value = this.settings.getBoolean(ThemeSettings.extendedFidelity.key, false)
         this._settings.hasAnimation.value = this.settings.getBoolean(ThemeSettings.hasAnimation.key, true)
-
     }
 
     fun setSeedColor(value: Color, invokeOnCompletion: () -> Unit = {}){
@@ -49,6 +54,30 @@ class DynamicThemeSettings(
                 key = ThemeSettings.seedColor.key
             )
         }.invokeOnCompletion { invokeOnCompletion() }
+    }
+    private fun setColor(value: Color?, type: ThemeSettings ,invokeOnCompletion: () -> Unit = {}){
+        this.scope.launch {
+            if (value == null) {
+                settings.remove(type.key)
+            } else {
+                settings.putInt(
+                    value = value.value.toInt(),
+                    key = type.key
+                )
+            }
+        }.invokeOnCompletion { invokeOnCompletion() }
+    }
+    fun setSecondaryColor(value: Color?, invokeOnCompletion: () -> Unit = {}){
+        this._settings.secondary.value = value
+        this.setColor(value, ThemeSettings.secondary, invokeOnCompletion)
+    }
+    fun setTertiaryColor(value: Color?, invokeOnCompletion: () -> Unit = {}){
+        this._settings.tertiary.value = value
+        this.setColor(value, ThemeSettings.tertiary, invokeOnCompletion)
+    }
+    fun setErrorColor(value: Color?, invokeOnCompletion: () -> Unit = {}){
+        this._settings.error.value = value
+        this.setColor(value, ThemeSettings.error, invokeOnCompletion)
     }
     fun setTheme(value: Boolean?, invokeOnCompletion: () -> Unit = {}){
         this._settings.theme.value = value

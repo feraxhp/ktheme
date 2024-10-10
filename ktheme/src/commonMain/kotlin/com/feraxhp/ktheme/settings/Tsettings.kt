@@ -6,8 +6,11 @@ import com.materialkolor.Contrast
 import kotlinx.coroutines.flow.MutableStateFlow
 
 
-internal data class Tsettings(
+internal data class Tsettings (
     val seedColor: MutableStateFlow<Color> =  MutableStateFlow(Color(0X4C662B)),
+    val secondary: MutableStateFlow<Color?> =  MutableStateFlow(null),
+    val tertiary: MutableStateFlow<Color?> =  MutableStateFlow(null),
+    val error: MutableStateFlow<Color?> =  MutableStateFlow(null),
     val theme: MutableStateFlow<Boolean?> = MutableStateFlow(null),
     val useDynamicColor: MutableStateFlow<Boolean> = MutableStateFlow(true),
     val useAmoled: MutableStateFlow<Boolean> = MutableStateFlow(false),
@@ -19,6 +22,9 @@ internal data class Tsettings(
 
 internal enum class ThemeSettings(val key: String) {
     seedColor("TSSEEDCOLOR"),
+    secondary("TSECONDARY"),
+    tertiary("TTERTIARY"),
+    error("TERROR"),
     theme("TSTHEME"),
     useDynamicColor("TSUSEDYNAMICCOLOR"),
     useAmoled("TSUSEAMOLED"),
