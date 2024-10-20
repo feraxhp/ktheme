@@ -4,6 +4,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import com.feraxhp.ktheme.icons.theme.Cpu
 import com.feraxhp.ktheme.icons.theme.Github
 import com.feraxhp.ktheme.icons.theme.Moon
+import com.feraxhp.ktheme.icons.theme.Palette
 import com.feraxhp.ktheme.icons.theme.Sun
 import kotlin.collections.List as ____KtList
 
@@ -16,6 +17,6 @@ public val ThemeIcons.getAll: ____KtList<ImageVector>
     if (all != null) {
       return all!!
     }
-    all= listOf(Cpu, Github, Moon, Sun)
+    all= listOf(Cpu, Github, Moon, Sun, Palette)
     return all!!
   }

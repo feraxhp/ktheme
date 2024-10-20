@@ -3,12 +3,15 @@ package com.feraxhp.sample.screens
 import com.feraxhp.ktheme.components.theme.ThemeSelector
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
@@ -19,6 +22,8 @@ import cafe.adriel.voyager.core.screen.ScreenKey
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.feraxhp.ktheme.LocalThemeSettings
 import com.feraxhp.ktheme.components.Density
+import com.feraxhp.ktheme.components.colorPicker.ColorPicker
+import com.feraxhp.ktheme.components.theme.SeedColorPicker
 import com.feraxhp.sample.screens.components.TopBar
 
 
@@ -37,12 +42,24 @@ class SettingsScreen : Screen {
 
                     TopBar(Modifier.padding(top = localValues.calculateTopPadding()))
 
-                    ThemeSelector(
+                    Row(
                         Modifier
-                            .padding(top = 16.dp)
-                            .align(Alignment.CenterHorizontally),
-                        Density.Small
-                    )
+                            .padding(top = 24.dp)
+                            .align(Alignment.CenterHorizontally)
+                        ,
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        ThemeSelector(
+                            Modifier
+                                .weight(2f)
+                                .padding(horizontal = 8.dp)
+                            ,
+                            Density.Small
+                        )
+
+                        SeedColorPicker()
+                    }
 
                     Column(
                         modifier = Modifier.padding(16.dp).fillMaxSize(),
