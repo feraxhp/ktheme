@@ -56,6 +56,7 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
+            implementation(libs.multiplatform.markdown.renderer.m3)
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material3)

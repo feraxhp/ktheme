@@ -26,7 +26,7 @@
 ```toml
 [versions]
 
-ktheme = "0.0.2"
+ktheme = "0.0.3"
 
 [libraries]
 

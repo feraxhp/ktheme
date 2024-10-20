@@ -7,6 +7,7 @@ compose = "1.7.0-alpha02"
 agp = "8.5.2"
 androidx-activityCompose = "1.9.3"
 androidx-uiTest = "1.7.4"
+multiplatformMarkdownRendererM3 = "0.26.0"
 voyager = "1.1.0-beta02"
 napier = "2.7.1"
 buildConfig = "5.3.5"
@@ -29,6 +30,7 @@ androidx-uitest-junit4 = { module = "androidx.compose.ui:ui-test-junit4", versio
 # colormath-ext-android-color = { module = "com.github.ajalt.colormath:colormath-ext-android-color", version.ref = "colormath" }
 # colormath-ext-android-colorint = { module = "com.github.ajalt.colormath:colormath-ext-android-colorint", version.ref = "colormath" }
 # colormath-ext-jetpack-compose = { module = "com.github.ajalt.colormath:colormath-ext-jetpack-compose", version.ref = "colormath" }
+multiplatform-markdown-renderer-m3 = { module = "com.mikepenz:multiplatform-markdown-renderer-m3", version.ref = "multiplatformMarkdownRendererM3" }
 voyager-navigator = { module = "cafe.adriel.voyager:voyager-navigator", version.ref = "voyager" }
 napier = { module = "io.github.aakira:napier", version.ref = "napier" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
