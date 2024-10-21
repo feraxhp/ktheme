@@ -1,0 +1,24 @@
+# MIT Licence
+# Copyright 2024 feraxhp
+
+
+name: Publish and Build library
+run-name: ♻️ ¡Update pages! ♻️
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  pages:
+    uses: feraxhp/kactions/.github/workflows/pages.yml@v1.0.0
+    with:
+      platform: 'Wasm'
+      module: ':sample:composeApp'
+
+
+# See LICENCE in the project root
+# for the full licence detail.
