@@ -13,7 +13,7 @@ permissions:
   id-token: write
 
 jobs:
-  pages:
+  Update:
     uses: feraxhp/kactions/.github/workflows/pages.yml@v1.0.0
     with:
       platform: 'Wasm'
