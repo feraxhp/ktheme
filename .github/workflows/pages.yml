@@ -2,7 +2,7 @@
 # Copyright 2024 feraxhp
 
 
-name: Publish and Build library
+name: Update project page
 run-name: ♻️ ¡Update pages! ♻️
 on:
   workflow_dispatch:
